@@ -207,7 +207,7 @@ http.createServer((req, res) => {
 Bienvenidos a DH Movies el mejor sitio para encontrar las mejores películas, incluso mucho mejor que Netflix, Cuevana y PopCorn​. 
 
 
-Total de películas en cartelera​: ${movies.length}
+Total de películas en cartelera​: ${getCantidadPeliculas(movies)}
 
 
 Listados de películas:
@@ -224,15 +224,27 @@ Recordá que podés visitar las secciones:
 		case '/en-cartelera':
 			res.end(`EN CARTELERA
 		
-Total de películas​: ${movies.length}
+			
+Total de películas​: ${getCantidadPeliculas(movies)}
 
 
 Listados de películas:
 
-${getStringPeliculasConResania()}`);
+${getStringPeliculasConDatos(movies, false)}`);
 			break;
 		case '/mas-votadas':
-			res.end('Más Votadas');
+			res.end(`MÁS VOTADAS
+			
+
+Total de películas​ : ${getCantidadPeliculas(getPeliculasMasVotadas(movies))}
+
+
+Rating promedio: ${getPromedioPeliculasMasVotadas(movies)}
+
+
+Listados de películas:
+
+${getStringPeliculasConDatos(getPeliculasMasVotadas(movies), true)}`);
 			break;
 		case '/sucursales':
 			res.end('Sucursales');
@@ -248,12 +260,12 @@ ${getStringPeliculasConResania()}`);
 	}
 }).listen(3030, 'localhost', () => console.log('Server running in 3030 port'));
 
-function getListaDePeliculas() {
-	return movies;
+function getCantidadPeliculas(arrayPeliculas) {
+	return arrayPeliculas.length;
 }
 
-function getStringPeliculasOrdenadasAlfabeticamente() {
-	let peliculasOrdenadasAlfabeticamente = getListaDePeliculas().sort((a, b) => a.title > b.title ? 1 : -1);
+function getStringPeliculasOrdenadasAlfabeticamente(arrayPeliculas) {
+	let peliculasOrdenadasAlfabeticamente = arrayPeliculas.sort((a, b) => a.title > b.title ? 1 : -1);
 	let stringTitulosDePeliculas = "";
 	for (const { title } of peliculasOrdenadasAlfabeticamente) {
 		stringTitulosDePeliculas += "\t\t\t > " + title + "\n";
@@ -261,10 +273,25 @@ function getStringPeliculasOrdenadasAlfabeticamente() {
 	return stringTitulosDePeliculas;
 }
 
-function getStringPeliculasConResania() {
+function getStringPeliculasConDatos(arrayPeliculas, conCalificacion) {
 	let stringPeliculasConResenia = "";
-	for (const unaPelicula of getListaDePeliculas()) {
-		stringPeliculasConResenia += " > " + unaPelicula.title.toUpperCase() + "\n" + unaPelicula.overview + "\n\n";
+	for (const unaPelicula of arrayPeliculas) {
+		stringPeliculasConResenia += " > " + unaPelicula.title.toUpperCase();
+		if (conCalificacion) {
+			stringPeliculasConResenia += "  (" + unaPelicula.vote_average + ")";
+		}
+		stringPeliculasConResenia += "\n" + unaPelicula.overview + "\n\n";
 	}
 	return stringPeliculasConResenia;
+}
+
+function getPeliculasMasVotadas(arrayPeliculas) {
+	return arrayPeliculas.filter(({ vote_average }) => vote_average >= 7 ? true : false);
+}
+
+function getPromedioPeliculasMasVotadas(arrayPeliculas) {
+	let peliculas = getPeliculasMasVotadas(arrayPeliculas);
+	let cantidad = getCantidadPeliculas(peliculas);
+	let promedio = peliculas.reduce((prom, { vote_average }) => prom += vote_average / cantidad, 0);
+	return parseFloat(Math.round(promedio * 100) / 100).toFixed(2);
 }
