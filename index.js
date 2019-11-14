@@ -202,7 +202,8 @@ http.createServer((req, res) => {
 	switch (req.url) {
 		// Home
 		case '/':
-			res.end(`
+			res.end(`HOMEPAGE
+
 Bienvenidos a DH Movies el mejor sitio para encontrar las mejores películas, incluso mucho mejor que Netflix, Cuevana y PopCorn​. 
 
 
@@ -210,19 +211,25 @@ Total de películas en cartelera​: ${movies.length}
 
 
 Listados de películas:
-${getPeliculasOrdenadasAlfabeticamente(movies)}
+${getStringPeliculasOrdenadasAlfabeticamente(movies)}
 
 Recordá que podés visitar las secciones: 
 					i. En Cartelera
 					ii. Más Votadas
 					iii. Sucursales
 					iv. Contacto
-					v. Preguntas Frecuentes
-`);
+					v. Preguntas Frecuentes`);
 			break;
 		// En cartelera
 		case '/en-cartelera':
-			res.end('En cartelera');
+			res.end(`EN CARTELERA
+		
+Total de películas​: ${movies.length}
+
+
+Listados de películas:
+
+${getStringPeliculasConResania()}`);
 			break;
 		case '/mas-votadas':
 			res.end('Más Votadas');
@@ -241,11 +248,23 @@ Recordá que podés visitar las secciones:
 	}
 }).listen(3030, 'localhost', () => console.log('Server running in 3030 port'));
 
-function getPeliculasOrdenadasAlfabeticamente(arrayPeliculas) {
-	let peliculasOrdenadas = arrayPeliculas.sort((a, b) => a.title > b.title ? 1 : -1);
-	let titulosDePeliculas = "";
-	for (const { title } of peliculasOrdenadas) {
-		titulosDePeliculas += "\t\t\t > " + title + "\n";
+function getListaDePeliculas() {
+	return movies;
+}
+
+function getStringPeliculasOrdenadasAlfabeticamente() {
+	let peliculasOrdenadasAlfabeticamente = getListaDePeliculas().sort((a, b) => a.title > b.title ? 1 : -1);
+	let stringTitulosDePeliculas = "";
+	for (const { title } of peliculasOrdenadasAlfabeticamente) {
+		stringTitulosDePeliculas += "\t\t\t > " + title + "\n";
 	}
-	return titulosDePeliculas;
+	return stringTitulosDePeliculas;
+}
+
+function getStringPeliculasConResania() {
+	let stringPeliculasConResenia = "";
+	for (const unaPelicula of getListaDePeliculas()) {
+		stringPeliculasConResenia += " > " + unaPelicula.title.toUpperCase() + "\n" + unaPelicula.overview + "\n\n";
+	}
+	return stringPeliculasConResenia;
 }
