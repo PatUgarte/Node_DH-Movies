@@ -202,7 +202,23 @@ http.createServer((req, res) => {
 	switch (req.url) {
 		// Home
 		case '/':
-			res.end('Home');
+			res.end(`
+Bienvenidos a DH Movies el mejor sitio para encontrar las mejores películas, incluso mucho mejor que Netflix, Cuevana y PopCorn​. 
+
+
+Total de películas en cartelera​: ${movies.length}
+
+
+Listados de películas:
+${getPeliculasOrdenadasAlfabeticamente(movies)}
+
+Recordá que podés visitar las secciones: 
+					i. En Cartelera
+					ii. Más Votadas
+					iii. Sucursales
+					iv. Contacto
+					v. Preguntas Frecuentes
+`);
 			break;
 		// En cartelera
 		case '/en-cartelera':
@@ -224,3 +240,12 @@ http.createServer((req, res) => {
 			res.end('404 not found')
 	}
 }).listen(3030, 'localhost', () => console.log('Server running in 3030 port'));
+
+function getPeliculasOrdenadasAlfabeticamente(arrayPeliculas) {
+	let peliculasOrdenadas = arrayPeliculas.sort((a, b) => a.title > b.title ? 1 : -1);
+	let titulosDePeliculas = "";
+	for (const { title } of peliculasOrdenadas) {
+		titulosDePeliculas += "\t\t\t > " + title + "\n";
+	}
+	return titulosDePeliculas;
+}

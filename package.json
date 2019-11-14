@@ -1,0 +1,22 @@
+{
+  "name": "dh-movies-easy",
+  "version": "1.0.0",
+  "description": "Versión sencilla del proyecto, con todo el código en un mismo archivo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PatUgarte/Node_DH-Movies.git"
+  },
+  "author": "Pat Ugarte",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PatUgarte/Node_DH-Movies/issues"
+  },
+  "homepage": "https://github.com/PatUgarte/Node_DH-Movies#readme",
+  "dependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
