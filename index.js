@@ -270,7 +270,15 @@ Envianos tu consulta, sugerencia o reclamo y será respondido a la brevedad. Rec
 `);
 			break;
 		case '/preguntas-frecuentes':
-			res.end('Preguntas Frecuentes');
+			res.end(`PREGUNTAS FRECUENTES
+
+
+Total de preguntas: ${getCantidad(faqs)}
+
+
+Listado de preguntas:
+${getStringFAQ(faqs)}
+`);
 			break;
 		default:
 			res.end('404 not found')
@@ -321,4 +329,13 @@ function getStringSucursales(arraySucursales) {
 		stringSucursales += "\n" + unaSucursal.description + "\n\n";
 	}
 	return stringSucursales;
+}
+
+function getStringFAQ(arrayFAQ) {
+	let stringFAQ = "";
+	for (const unaFAQ of arrayFAQ) {
+		stringFAQ += "\n\t> " + unaFAQ.faq_title.toUpperCase();
+		stringFAQ += "\n\n" + unaFAQ.faq_answer + "\n\n";
+	}
+	return stringFAQ;
 }
