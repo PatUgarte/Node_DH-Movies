@@ -2,7 +2,7 @@
   "name": "dh-movies-easy",
   "version": "1.0.0",
   "description": "Versión sencilla del proyecto, con todo el código en un mismo archivo.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
