@@ -8,6 +8,6 @@ Nos encanta escuchar a nuestros clientes. Si deseas contactarnos podés escribir
 Envianos tu consulta, sugerencia o reclamo y será respondido a la brevedad. 
 
 Recordá que también podes consultar la sección de Preguntas Frecuentes para obtener respuestas inmediatas a los problemas más comunes.`,
-}
+};
 
 module.exports = contacto;

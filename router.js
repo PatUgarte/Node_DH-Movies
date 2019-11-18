@@ -27,6 +27,6 @@ let routeSystem = {
                 return textos.defaultString;
         }
     }
-}
+};
 
 module.exports = routeSystem;

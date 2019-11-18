@@ -14,6 +14,6 @@ let textosURL = {
     preguntasFrecuentesString: preguntasFrecuentes.texto,
     sucursalesString: sucursales.texto,
     defaultString: notFound.texto,
-}
+};
 
 module.exports = textosURL;

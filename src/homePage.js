@@ -1,15 +1,8 @@
 const fileSystem = require("fs");
-let moviesJsonPath = process.cwd() + "/data/movies.json";
-let moviesJson = JSON.parse(fileSystem.readFileSync(moviesJsonPath, { encoding: "utf8" }));
-
-function getStringPeliculasOrdenadasAlfabeticamente({ results }) {
-    let peliculasOrdenadasAlfabeticamente = results.sort((a, b) => a.title > b.title ? 1 : -1);
-    let stringTitulosDePeliculas = "";
-    for (const { title } of peliculasOrdenadasAlfabeticamente) {
-        stringTitulosDePeliculas += "\t\t\t > " + title + "\n";
-    }
-    return stringTitulosDePeliculas;
-}
+const currentWorkingDir = process.cwd();
+const moviesJsonPath = currentWorkingDir + "/data/movies.json";
+const moviesJson = JSON.parse(fileSystem.readFileSync(moviesJsonPath, { encoding: "utf8" }));
+const { movieFunctions } = require(currentWorkingDir + "/customFunctions.js");
 
 let homePage = {
     texto: `HOMEPAGE
@@ -21,7 +14,7 @@ Total de películas en cartelera​: ${moviesJson.total}
     
     
 Listados de películas:
-    ${getStringPeliculasOrdenadasAlfabeticamente(moviesJson)}
+    ${movieFunctions.alphabeticallySorted(moviesJson)}
     
 Recordá que podés visitar las secciones: 
                                       i. En Cartelera
@@ -29,6 +22,6 @@ Recordá que podés visitar las secciones:
                                     iii. Sucursales
                                      iv. Contacto
                                       v. Preguntas Frecuentes`
-}
+};
 
 module.exports = homePage;
