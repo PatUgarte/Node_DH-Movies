@@ -1,21 +1,8 @@
 const http = require("http");
-
-const data = require("./data/index.js");
-
-const movies = data.movies;
-
-console.log(movies);
+const routeSystem = require(__dirname + "/router.js");
 
 http.createServer((res, req) => {
-    switch (res.url) {
-        case "/":
-            req.end("Home");
-            break;
-        case "/prueba":
-            req.end("Prueba");
-            break;
-        default:
-            req.end("Error");
-            break;
-    }
+    req.writeHead(200, { "content-type": "text/plain; charset=utf-8" });
+    let texto = routeSystem.route(res.url);
+    req.end(texto);
 }).listen(8080, "localhost");
